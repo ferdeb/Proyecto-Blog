@@ -1,25 +1,25 @@
-CREATE DATABASE blog;
+CREATE DATABASE blog2;
 
-USE blog;
+USE blog2;
+
+-- Tabla TiposUsuario
+CREATE TABLE tipoUsuario (
+    tipu_id INT AUTO_INCREMENT PRIMARY KEY,
+    tipu_rol VARCHAR(30) NOT NULL
+);
 
 -- Tabla Usuarios
 -- VARCHAR de 50 para soportar apellidos largos, segun ChatGPT
 CREATE TABLE usuario (
     usu_id INT AUTO_INCREMENT PRIMARY KEY,
     usu_nombre VARCHAR(50) NOT NULL,
-    usu_paterno VARCHAR(50) NOT NULL,         
+    usu_paterno VARCHAR(50) NOT NULL,
     usu_materno VARCHAR(50) NOT NULL,
     usu_mail VARCHAR(50) UNIQUE NOT NULL,
     tipo_usuario_id INT,
     FOREIGN KEY (tipo_usuario_id) REFERENCES tipoUsuario(tipu_id)
 );
 
--- Tabla TiposUsuario
-CREATE TABLE tipoUsuario (
-    --tipou_id?
-    tipu_id INT AUTO_INCREMENT PRIMARY KEY,
-    tipu_rol VARCHAR(30) NOT NULL
-);
 
 -- Tabla Categorias
 CREATE TABLE categoria (
@@ -62,8 +62,8 @@ CREATE TABLE comentario (
 -- Tabla Calificaciones
 -- Este me lo paso ChatGPT, permite un unico like por usuario y contenido
 -- Usando este query
--- INSERT INTO calificacion (contenido_id, usuario_id) 
--- VALUES (1, 2) 
+-- INSERT INTO calificacion (contenido_id, usuario_id)
+-- VALUES (1, 2)
 -- ON DUPLICATE KEY UPDATE cal_id = cal_id;
 
 CREATE TABLE calificacion (
@@ -110,29 +110,4 @@ CREATE TABLE contenido_categoria (
     FOREIGN KEY (contenido_id) REFERENCES contenido(cont_id),
     FOREIGN KEY (categoria_id) REFERENCES categoria(cat_id)
 );
-
--- Relación muchos a muchos entre Imagenes y Categorias
-CREATE TABLE imagen_categoria (
-    imagen_id INT,
-    categoria_id INT,
-    PRIMARY KEY (imagen_id, categoria_id),
-    FOREIGN KEY (imagen_id) REFERENCES imagen(img_idid),
-    FOREIGN KEY (categoria_id) REFERENCES categoria(cat_id)
-);
-
--- Relación muchos a muchos entre Notificaciones y Usuarios
-CREATE TABLE notificacion_usuario (
-    notificacion_id INT,
-    usuario_id INT,
-    PRIMARY KEY (notificacion_id, usuario_id),
-    FOREIGN KEY (notificacion_id) REFERENCES notificacion(noti_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(usu_id)
-);
-
--- Para uso en Linux sin la s
-
--- SHOW DATABASES;
-
--- USE blog;
-
--- SHOW TABLES;
+-- Adios Imagen categoria

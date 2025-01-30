@@ -1,4 +1,5 @@
 CREATE DATABASE blog;
+
 USE blog;
 
 -- Tabla Usuarios
@@ -59,10 +60,17 @@ CREATE TABLE comentario (
 );
 
 -- Tabla Calificaciones
+-- Este me lo paso ChatGPT, permite un unico like por usuario y contenido
+-- Usando este query
+-- INSERT INTO calificacion (contenido_id, usuario_id) 
+-- VALUES (1, 2) 
+-- ON DUPLICATE KEY UPDATE cal_id = cal_id;
+
 CREATE TABLE calificacion (
     cal_id INT AUTO_INCREMENT PRIMARY KEY,
-    calificacion INT,
+    contenido_id INT,
     usuario_id INT,
+    UNIQUE (contenido_id, usuario_id), -- Evita duplicados
     FOREIGN KEY (contenido_id) REFERENCES contenido(cont_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(usu_id)
 );
@@ -121,11 +129,10 @@ CREATE TABLE notificacion_usuario (
     FOREIGN KEY (usuario_id) REFERENCES usuario(usu_id)
 );
 
-
--- SHOW TABLES;
-
+-- Para uso en Linux sin la s
 
 -- SHOW DATABASES;
 
+-- USE blog;
 
--- USE Blog;
+-- SHOW TABLES;

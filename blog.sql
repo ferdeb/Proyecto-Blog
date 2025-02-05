@@ -8,6 +8,15 @@ CREATE TABLE `tipousuario` (
   `tipu_descripcion` TEXT NULL,
   PRIMARY KEY (`tipu_id`)
 );
+
+-- Tabla de imágenes
+CREATE TABLE `imagen` (
+  `img_id` INT NOT NULL AUTO_INCREMENT,
+  `img_url` VARCHAR(255) NOT NULL,
+  `img_descripcion` TEXT NULL,
+  PRIMARY KEY (`img_id`)
+);
+
 -- Tabla de usuarios
 CREATE TABLE `usuario` (
   `usu_id` INT NOT NULL AUTO_INCREMENT,
@@ -26,6 +35,7 @@ CREATE TABLE `usuario` (
   FOREIGN KEY (`tipo_usuario_id`) REFERENCES `tipousuario` (`tipu_id`),
   FOREIGN KEY (`usu_foto_perfil`) REFERENCES `imagen` (`img_id`)
 );
+
 -- Tabla de contenido
 CREATE TABLE `contenido` (
   `cont_id` INT NOT NULL AUTO_INCREMENT,
@@ -39,6 +49,15 @@ CREATE TABLE `contenido` (
   `usuario_id` INT NULL,
   PRIMARY KEY (`cont_id`),
   FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usu_id`)
+);
+
+-- Tabla intermedia de contenido e imágenes
+CREATE TABLE `contenido_imagen` (
+  `contenido_id` INT NOT NULL,
+  `imagen_id` INT NOT NULL,
+  PRIMARY KEY (`contenido_id`, `imagen_id`),
+  FOREIGN KEY (`contenido_id`) REFERENCES `contenido` (`cont_id`),
+  FOREIGN KEY (`imagen_id`) REFERENCES `imagen` (`img_id`)
 );
 
 -- Tabla de calificación
@@ -64,7 +83,6 @@ CREATE TABLE `categoria` (
 );
 
 -- Tabla de comentarios
--- Tabla de comentarios
 CREATE TABLE `comentario` (
   `cmt_id` INT NOT NULL AUTO_INCREMENT,
   `cmt_texto` TEXT NOT NULL,
@@ -78,6 +96,7 @@ CREATE TABLE `comentario` (
   FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usu_id`),
   FOREIGN KEY (`cmt_responde_a`) REFERENCES `comentario` (`cmt_id`)
 );
+
 
 -- Tabla intermedia de contenido y categoría
 CREATE TABLE `contenido_categoria` (
@@ -102,21 +121,4 @@ CREATE TABLE `contenido_etiqueta` (
   PRIMARY KEY (`contenido_id`, `etiqueta_id`),
   FOREIGN KEY (`contenido_id`) REFERENCES `contenido` (`cont_id`),
   FOREIGN KEY (`etiqueta_id`) REFERENCES `etiqueta` (`etiq_id`)
-);
-
--- Tabla de imágenes
-CREATE TABLE `imagen` (
-  `img_id` INT NOT NULL AUTO_INCREMENT,
-  `img_url` VARCHAR(255) NOT NULL,
-  `img_descripcion` TEXT NULL,
-  PRIMARY KEY (`img_id`)
-);
-
--- Tabla intermedia de contenido e imágenes
-CREATE TABLE `contenido_imagen` (
-  `contenido_id` INT NOT NULL,
-  `imagen_id` INT NOT NULL,
-  PRIMARY KEY (`contenido_id`, `imagen_id`),
-  FOREIGN KEY (`contenido_id`) REFERENCES `contenido` (`cont_id`),
-  FOREIGN KEY (`imagen_id`) REFERENCES `imagen` (`img_id`)
 );

@@ -1,0 +1,7 @@
+#Ignorando carpetas del proyecto
+
+/config
+/venv
+
+b.txt
+

@@ -1,7 +1,11 @@
 #Ignorando carpetas del proyecto
 
 /config
+
 /venv
 
-b.txt
+/blog
 
+/blog_api
+
+b.txt
